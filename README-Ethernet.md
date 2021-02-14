@@ -1,3 +1,7 @@
+# Ethernet
+
+There are 2 versions of H97N-WIFI with different hardware.
+
 ## GA-H97N-WIFI (rev. 1.0)
 
 Rev. 1.0 has
@@ -40,7 +44,7 @@ Optionally remove from `/EFI/OC/Kexts`:
 - `AtherosE2200Ethernet.kext`
 - `IntelMausiEthernet.kext`
 
-### Edit config.plist
+## Updating config.plist
 
 When removing kexts from `/EFI/OC/Kexts` also remove the corresponding `<dict>` from `/EFI/OC/config.plist`, or change `<key>Enabled</key>` from `<true/>` to `<false/>`
 
