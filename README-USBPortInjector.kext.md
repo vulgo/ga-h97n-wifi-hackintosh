@@ -4,7 +4,7 @@ This codeless kext injects the port map and power properties for the XHC on our 
 
 ```Info.plist``` will require edits and should have:
 * no more than **15** ports in the ```ports``` dictionary
-* a ```model``` that matches ```PlatformInfo```&#8594;```SystemProductName```  in the OC config.plist e.g. ```iMac15,1```
+* a ```model``` that matches ```PlatformInfo```&#8594;```SystemProductName```  in the OC config.plist e.g. ```iMac18,2```
 * a ```port-count``` that corresponds not to the total number of ports, but to the highest ```port``` address value present in in the ```ports``` dictionary e.g. ```0x15000000``` or ```FQAAAA==```
 
 ### Port Physical Locations

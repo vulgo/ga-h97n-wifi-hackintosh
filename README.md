@@ -94,7 +94,7 @@ Edit the ```PlatformInfo``` section of your config.plist so that the ```MLB```, 
 | SystemSerialNumber           | \**Serial*                |
 | SystemUUID                   | \**SmUUID*                |
 
-\* *GenSMBIOS output, iMac15,1*
+\* *GenSMBIOS output, iMac18,2*
 
 Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo](https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo)
 
