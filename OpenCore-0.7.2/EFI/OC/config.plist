@@ -22,6 +22,14 @@
 				<key>Path</key>
 				<string>SSDT-SLPT.aml</string>
 			</dict>
+			<dict>
+				<key>Comment</key>
+				<string>Enable AppleUSBHostResources power properties</string>
+				<key>Enabled</key>
+				<true/>
+				<key>Path</key>
+				<string>SSDT-USBX.aml</string>
+			</dict>
 		</array>
 		<key>Delete</key>
 		<array/>
