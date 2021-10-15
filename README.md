@@ -2,8 +2,6 @@
 
 OpenCore configuration for running macOS on the Gigabyte GA-H97N-WIFI motherboard.
 
-This is for Haswell CPUs. For desktop Broadwell see [github.com/vulgo/h97n-wifi-broadwell-hackintosh](https://github.com/vulgo/h97n-wifi-broadwell-hackintosh)
-
 ## Firmware Settings
 
 #### BIOS Features
