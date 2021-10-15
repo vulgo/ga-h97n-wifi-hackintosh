@@ -4,6 +4,8 @@
 
 #### Haswell
 
+```AAPL,ig-platform-id``` for Haswell HD graphics
+
 ```xml
 ...
 <key>DeviceProperties</key>
@@ -26,6 +28,8 @@
 
 #### Broadwell
 
+```AAPL,ig-platform-id``` for Broadwell Iris Pro graphics
+
 ```xml
 ...
 <key>DeviceProperties</key>
@@ -47,6 +51,8 @@
 ```
 
 #### Common
+
+Connector patches for H97N-WIFI Haswell or Broadwell graphics
 
 ```xml
 ...
