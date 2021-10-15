@@ -52,10 +52,13 @@ Edit the ```DeviceProperties``` section of your config.plist so that the value f
 ...
 ```
 
-| AAPL,ig-platform-id | Base64   | IGPU Configuration                    |
-|:--------------------|:---------|--------------------------------------:|
-| 0300220D            | AwAiDQ== | Attached display                      |
-| 04001204            | BAASBA== | Connectorless (using PCIe AMD GPU)    |
+| AAPL,ig-platform-id | Base64   | IGPU Configuration                         |
+|:--------------------|:---------|:-------------------------------------------|
+| 0300220D            | AwAiDQ== | Haswell attached display                   |
+| 04001204            | BAASBA== | Haswell connectorless (using PCIe AMD GPU) |
+| 07002216            | BwAiFg== | Broadwell                                  |
+
+See also [README-Intel-Graphics.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-Intel-Graphics.md).
 
 Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#deviceproperties](https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#deviceproperties)
 
