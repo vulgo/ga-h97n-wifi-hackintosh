@@ -289,7 +289,7 @@
 				<key>Arch</key>
 				<string>Any</string>
 				<key>BundlePath</key>
-				<string>USBPortInjector.kext</string>
+				<string>USBTool.kext</string>
 				<key>Comment</key>
 				<string>USB Port Injector</string>
 				<key>Enabled</key>

@@ -1,11 +1,6 @@
-## USBPortInjector.kext
+## USB Tool
 
-This codeless kext injects a port map for the XHC on our H97N-WIFI.
-
-```Info.plist``` will require edits and should have:
-* no more than **15** ports in the ```ports``` dictionary
-* a ```model``` that matches ```PlatformInfo```&#8594;```SystemProductName```  in the OC config.plist e.g. ```iMac18,2```
-* a ```port-count``` that corresponds not to the total number of ports, but to the highest ```port``` address value present in in the ```ports``` dictionary e.g. ```0x15000000``` or ```FQAAAA==```
+This needs to be written
 
 ### Port Physical Locations
 
@@ -53,10 +48,3 @@ by [grumat](https://github.com/grumat)
 |    --     \-------------/     ˜˜˜˜      ------    ------    ----    ˜˜  |
  -------------------------------------------------------------------------
  ```
-
-## 15 Port Limit
-
-Disable the ports you aren't using by removing them from USBPortInjector.kext/Contents/Info.plist
-
-**Example:** If you are not using the USB 2 header ports, then removing HS05,HS06 = 15 ports
-
