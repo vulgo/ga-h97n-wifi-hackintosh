@@ -1,4 +1,4 @@
-## USB Tool
+## usbtool.command
 
 This needs to be written
 
