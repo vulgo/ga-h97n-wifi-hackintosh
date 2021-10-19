@@ -4,7 +4,7 @@
 
 #### Haswell
 
-```AAPL,ig-platform-id``` for Haswell HD graphics
+```AAPL,ig-platform-id``` for Haswell systems not using a discrete PCIe graphics card
 
 ```xml
 ...
@@ -52,7 +52,7 @@
 
 #### Common
 
-Connector patches for H97N-WIFI Haswell or Broadwell graphics
+Connector patches for H97N-WIFI Haswell or Broadwell systems not using a discrete PCIe graphics card
 
 ```xml
 ...
