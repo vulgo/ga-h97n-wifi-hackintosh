@@ -29,106 +29,108 @@ let kPortCountKey = "port-count"
 let kPortsKey = "ports"
 let kPortKey = "port"
 let kUSBConnectorKey = "UsbConnector"
+let kWindowWidth: CGFloat = 400.0
+let kPortListEdgeInsets = NSEdgeInsets(top: 4.0, left: 8.0, bottom: 8.0, right: 8.0)
+let kPortListRowSpacing: CGFloat = 8.0
+let kContentSpacing: CGFloat = 16.0
 
 class PortMap {
 	static let shared = PortMap()
 	
-	private init() { }
-	
-	public let data = [
-		USBPort(
+	public let data: [USBPort] = [
+		.init(
 			name: "HS01",
 			address: 0x1,
-			connectorType: .a3,
-			description: "USB 3 Header"
-		), USBPort(
+			connector: .a3,
+			info: "USB 3 Header"
+		), .init(
 			name: "HS02",
 			address: 0x2,
-			connectorType: .a3,
-			description: "USB 3 Header"
-		), USBPort(
+			connector: .a3,
+			info: "USB 3 Header"
+		), .init(
 			name: "HS03",
 			address: 0x3,
-			connectorType: .a3,
-			description: "Rear Panel USB 3 Connector"
-		), USBPort(
+			connector: .a3,
+			info: "Rear Panel USB 3 Connector"
+		), .init(
 			name: "HS04",
 			address: 0x4,
-			connectorType: .a3,
-			description: "Rear Panel USB 3 Connector"
-		), USBPort(
+			connector: .a3,
+			info: "Rear Panel USB 3 Connector"
+		), .init(
 			name: "HS05",
 			address: 0x5,
-			connectorType: .a3,
-			description: "USB 2 Header"
-		), USBPort(
+			connector: .a3,
+			info: "USB 2 Header"
+		), .init(
 			name: "HS06",
 			address: 0x6,
-			connectorType: .a3,
-			description: "USB 2 Header"
-		), USBPort(
+			connector: .a3,
+			info: "USB 2 Header"
+		), .init(
 			name: "HS07",
 			address: 0x7,
-			connectorType: .a2,
-			description: "Rear Panel USB 2 Connector"
-		), USBPort(
+			connector: .a2,
+			info: "Rear Panel USB 2 Connector"
+		), .init(
 			name: "HS08",
 			address: 0x8,
-			connectorType: .a2,
-			description: "Rear Panel USB 2 Connector"
-		), USBPort(
+			connector: .a2,
+			info: "Rear Panel USB 2 Connector"
+		), .init(
 			name: "HS09",
 			address: 0x9,
-			connectorType: .a2,
-			description: "Rear Panel USB 3 Connector"
-		), USBPort(
+			connector: .a2,
+			info: "Rear Panel USB 3 Connector"
+		), .init(
 			name: "HS10",
 			address: 0xA,
-			connectorType: .a2,
-			description: "Rear Panel USB 3 Connector"
-		), USBPort(
+			connector: .a2,
+			info: "Rear Panel USB 3 Connector"
+		), .init(
 			name: "HS11",
 			address: 0xB,
-			connectorType: .proprietary,
-			description: "Mini PCI Express"
-		), USBPort(
+			connector: .proprietary,
+			info: "Mini PCI Express"
+		), .init(
 			name: "SS01",
 			address: 0x10,
-			connectorType: .a3,
-			description: "USB 3 Header"
-		), USBPort(
+			connector: .a3,
+			info: "USB 3 Header"
+		), .init(
 			name: "SS02",
 			address: 0x11,
-			connectorType: .a3,
-			description: "USB 3 Header"
-		), USBPort(
+			connector: .a3,
+			info: "USB 3 Header"
+		), .init(
 			name: "SS03",
 			address: 0x12,
-			connectorType: .a3,
-			description: "Rear Panel USB 3 Connector"
-		), USBPort(
+			connector: .a3,
+			info: "Rear Panel USB 3 Connector"
+		), .init(
 			name: "SS04",
 			address: 0x13,
-			connectorType: .a3,
-			description: "Rear Panel USB 3 Connector"
-		), USBPort(
+			connector: .a3,
+			info: "Rear Panel USB 3 Connector"
+		), .init(
 			name: "SS05",
 			address: 0x14,
-			connectorType: .a3,
-			description: "Rear Panel USB 3 Connector"
-		), USBPort(
+			connector: .a3,
+			info: "Rear Panel USB 3 Connector"
+		), .init(
 			name: "SS06",
 			address: 0x15,
-			connectorType: .a3,
-			description: "Rear Panel USB 3 Connector"
+			connector: .a3,
+			info: "Rear Panel USB 3 Connector"
 		)
 	]
 }
 
 extension FixedWidthInteger {
-	public func data() -> Data {
+	public var data: Data {
 		var tmp = self
-		return Data(bytes: &tmp, count: MemoryLayout<Self>.size)
+		return .init(bytes: &tmp, count: MemoryLayout<Self>.size)
 	}
 }
 
@@ -153,34 +155,42 @@ extension String: LocalizedError {
 	}
 }
 
-struct USBPort {
-	let name: String
-	let address: UInt32
-	let connectorType: ConnectorType
-	let description: String
+extension DispatchQueue {
+	static let work = DispatchQueue(label: "work")
+}
+
+extension URL {
+	static let desktop: URL? = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask).first
+}
+
+enum USBConnector: UInt8 {
+	case a2 = 0x0 // Type A (USB 2)
+	case a3 = 0x3 // Type A (USB 3)
+	case c2 = 0x8 // Type C (USB 2)
+	case c3s = 0x9 // Type C (USB 3, switched)
+	case c3 = 0xA // Type C (USB 3)
+	case proprietary = 0xFF // Not user visible (e.g. internal bluetooth)
+}
+
+@objc class USBPort: NSObject {
+	public let name: String
+	public let address: UInt32
+	public let connector: USBConnector
+	public let info: String
+	@objc private(set) var isEnabled: Bool
 	
-	var addressData: Data {
-		return address.data()
-	}
-	
-	enum ConnectorType: UInt8 {
-		case a2 = 0x0 // Type A (USB 2)
-		case a3 = 0x3 // Type A (USB 3)
-		case c2 = 0x8 // Type C (USB 2)
-		case c3s = 0x9 // Type C (USB 3, switched)
-		case c3 = 0xA // Type C (USB 3)
-		case proprietary = 0xFF // Not user visible (e.g. internal bluetooth)
-	}
-	
-	init(name: String, address: UInt32, connectorType: ConnectorType, description: String) {
+	init(name: String, address: UInt32, connector: USBConnector, info: String, isEnabled: Bool = true) {
 		self.name = name
 		self.address = address
-		self.connectorType = connectorType
-		self.description = description
+		self.connector = connector
+		self.info = info
+		self.isEnabled = isEnabled
 	}
 }
 
 class BundleWriter {
+	static let shared = BundleWriter()
+	
 	private let infoPlistSource: NSDictionary
 	
 	private static func decodeInfoPlistSourceData() throws -> NSDictionary {
@@ -213,29 +223,30 @@ class BundleWriter {
 		}
 	}
 	
-	private lazy var desktopURL: URL? = {
-		let paths = FileManager.default.urls(for: .desktopDirectory, in: .userDomainMask)
-		return paths.first
-	}()
-	
 	private lazy var modelIdentifier: String = {
+		var identifier: String?
 		let entry = IORegistryEntryFromPath(kIOMasterPortDefault, "IOService:/")
 		
-		guard let data = IORegistryEntryCreateCFProperty(entry, "model" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Data,
-		      let id = String(data: data, encoding: .macOSRoman)?.trimmingCharacters(in: CharacterSet(charactersIn: "\0")) else {
-			FileHandle.standardError.print("error: using fallback model identifier \(kFallbackModelIdentifier)!")
+		if let data = IORegistryEntryCreateCFProperty(entry, "model" as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? Data {
+			identifier = String(data: data, encoding: .macOSRoman)?.filter { $0 != "\0"}
+		}
+		
+		IOObjectRelease(entry)
+		
+		guard identifier != nil else {
+			FileHandle.standardError.print("warning: using fallback model identifier \(kFallbackModelIdentifier)!")
 			return kFallbackModelIdentifier
 		}
 		
-		return id
+		return identifier!
 	}()
 	
-	public func writeToDesktop(bundleName: String, bundleIdentifier: String, ioNameMatch: String, ioProviderClass: String, userMap: [USBPort]) throws -> URL {
+	public func write(destinationURL url: URL?, userMap: [USBPort]) throws -> URL {
 		guard !userMap.isEmpty else {
 			throw "\(#function): userMap is empty"
 		}
 		
-		guard let bundleURL = desktopURL?.appendingPathComponent("\(bundleName).kext") else {
+		guard let bundleURL = url?.appendingPathComponent("\(kBundleName).kext") else {
 			throw "\(#function): failed to build bundle path"
 		}
 		
@@ -245,26 +256,26 @@ class BundleWriter {
 		let ioProviderMergePropertiesDict = NSMutableDictionary()
 		let portsDict = NSMutableDictionary()
 		
-		userInfoPlist.setObject(bundleName, forKey: kCFBundleNameKey as NSString)
-		userInfoPlist.setObject(bundleIdentifier, forKey: kCFBundleIdentifierKey as NSString)
+		userInfoPlist.setObject(kBundleName, forKey: kCFBundleNameKey as NSString)
+		userInfoPlist.setObject(kBundleIdentifier, forKey: kCFBundleIdentifierKey as NSString)
 		userInfoPlist.setObject(ioKitPersonalitiesDict, forKey: kIOPersonalitiesKey as NSString)
 		
 		ioKitPersonalitiesDict.setObject(driverPersonalityDict, forKey: "Generated by \(kAppTitle) for \(kTargetBoard)" as NSString)
 		
 		driverPersonalityDict.setObject(kDriverIdentifier, forKey: kCFBundleIdentifierKey as NSString)
 		driverPersonalityDict.setObject(kDriverClass, forKey: kIOClassKey as NSString)
-		driverPersonalityDict.setObject(ioNameMatch, forKey: kIONameMatchKey as NSString)
-		driverPersonalityDict.setObject(ioProviderClass, forKey: kIOProviderClassKey as NSString)
+		driverPersonalityDict.setObject(kIONameMatch, forKey: kIONameMatchKey as NSString)
+		driverPersonalityDict.setObject(kIOProviderClass, forKey: kIOProviderClassKey as NSString)
 		driverPersonalityDict.setObject(ioProviderMergePropertiesDict, forKey: kIOProviderMergePropertiesKey as NSString)
 		
 		ioProviderMergePropertiesDict.setObject(modelIdentifier, forKey: kModelIdentifierKey as NSString)
-		ioProviderMergePropertiesDict.setObject(userMap.last!.address.data(), forKey: kPortCountKey as NSString)
+		ioProviderMergePropertiesDict.setObject(userMap.last!.address.data, forKey: kPortCountKey as NSString)
 		ioProviderMergePropertiesDict.setObject(portsDict, forKey: kPortsKey as NSString)
 		
 		for port in userMap {
 			let portDict = NSMutableDictionary()
-			portDict.setObject(port.address.data(), forKey: kPortKey as NSString)
-			portDict.setObject(port.connectorType.rawValue, forKey: kUSBConnectorKey as NSString)
+			portDict.setObject(port.address.data, forKey: kPortKey as NSString)
+			portDict.setObject(port.connector.rawValue, forKey: kUSBConnectorKey as NSString)
 			portsDict.setObject(portDict, forKey: port.name as NSString)
 		}
 		
@@ -279,88 +290,40 @@ class BundleWriter {
 	}
 }
 
-class PortListStackView: NSStackView {
-	override init(frame: NSRect) {
-		super.init(frame: frame)
-		orientation = .vertical
-		distribution = .fill
-		alignment = .left
-		translatesAutoresizingMaskIntoConstraints = false
+class ViewController: NSViewController {
+	static let shared = ViewController()
+	
+	private lazy var portListView: NSStackView = {
+		let view = NSStackView()
 		
 		for port in PortMap.shared.data {
-			let button = Self.makePortSwitchButton(title: "\(port.name) (\(port.description))")
-			buttons.append(button)
-			addArrangedSubview(Self.makeHorizontalStackView(subviews: button))
+			let button = Self.makePortSwitchButton(title: "\(port.name) (\(port.info))", initialState: port.isEnabled ? .on : .off)
+			button.bind(NSBindingName.value, to: port, withKeyPath: #keyPath(USBPort.isEnabled), options: nil)
+			button.target = self
+			button.action = #selector(ViewController.switchButtonPressed(_:))
+			view.addArrangedSubview(button)
 		}
-	}
-	
-	convenience init() {
-		self.init(frame: NSRect(x: 0, y: 0, width: 0, height: 0))
-	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
-	
-	public var buttons = [NSButton]()
-	
-	public func getEnabledIndices() -> [Int] {
-		return (buttons.filter { $0.state == .on }).map { $0.tag }
-	}
-	
-	/* factory method */
-	private static func makeHorizontalStackView(subviews: NSView...) -> NSStackView {
-		let view = NSStackView()
-		view.orientation = .horizontal
+		
+		view.orientation = .vertical
+		view.spacing = kPortListRowSpacing
+		view.edgeInsets = kPortListEdgeInsets
 		view.distribution = .fill
-		view.alignment = .firstBaseline
+		view.alignment = .left
 		view.translatesAutoresizingMaskIntoConstraints = false
-		
-		for subview in subviews {
-			view.addArrangedSubview(subview)
-		}
-		
 		return view
-	}
+	}()
 	
-	/* factory method */
-	private static func makePortSwitchButton(title: String) -> NSButton {
-		let button = NSButton()
-		button.setButtonType(.switch)
-		button.title = title
-		button.focusRingType = .none
-		button.state = .on
-		return button
-	}
-}
-
-class ViewController: NSViewController {
-	static let shared: ViewController = ViewController(nibName: nil, bundle: nil)
-	
-	private lazy var portListView = PortListStackView()
-	
-	private lazy var saveButton: NSButton = {
-		let title = "Save Bundle to Desktop"
+	private lazy var writeButton: NSButton = {
 		let button = NSButton()
 		button.translatesAutoresizingMaskIntoConstraints = false
 		button.bezelStyle = .rounded
-		button.title = title
+		button.title = "Write Bundle to Desktop"
 		button.isEnabled = false
 		return button
 	}()
 	
-	private var portMap: PortMap {
-		return representedObject as! PortMap
-	}
-	
 	private var userMap: [USBPort] {
-		var ports = [USBPort]()
-		
-		for idx in portListView.getEnabledIndices() {
-			ports.append(portMap.data[idx])
-		}
-		
-		return ports
+		return PortMap.shared.data.filter { $0.isEnabled }
 	}
 	
 	override func loadView() {
@@ -368,82 +331,63 @@ class ViewController: NSViewController {
 	}
 	
 	override func viewDidLoad() {
-		let spacing: CGFloat = 20.0
-		
-		/* set the represented object */
-		representedObject = PortMap.shared
-		
 		/* set the window title */
 		view.window?.title = kAppTitle
 		
 		/* add subviews to window */
 		view.addSubview(portListView)
-		view.addSubview(saveButton)
+		view.addSubview(writeButton)
 		
 		/* add layout constraints */
-		portListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: spacing).isActive = true
-		portListView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -spacing).isActive = true
-		portListView.topAnchor.constraint(equalTo: view.topAnchor, constant: spacing).isActive = true
-		portListView.bottomAnchor.constraint(equalTo: saveButton.topAnchor, constant: -spacing).isActive = true
-		saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -spacing).isActive = true
-		saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -spacing).isActive = true
-		
-		/* setup port list view */
-		var idx = 0
-		for button in portListView.buttons {
-			button.tag = idx
-			button.target = self
-			button.action = #selector(ViewController.switchButtonPressed(_:))
-			idx += 1
-		}
+		portListView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: kContentSpacing).isActive = true
+		portListView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -kContentSpacing).isActive = true
+		portListView.topAnchor.constraint(equalTo: view.topAnchor, constant: kContentSpacing).isActive = true
+		portListView.bottomAnchor.constraint(equalTo: writeButton.topAnchor, constant: -kContentSpacing).isActive = true
+		writeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -kContentSpacing).isActive = true
+		writeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -kContentSpacing).isActive = true
 		
 		/* setup save button */
-		saveButton.target = self
-		saveButton.action = #selector(ViewController.saveButtonPressed(_:))
-		saveButton.isEnabled = portListView.getEnabledIndices().count <= 15
+		writeButton.target = self
+		writeButton.action = #selector(ViewController.writeButtonPressed(_:))
+		writeButton.isEnabled = userMap.count <= 15
 	}
 	
 	@objc func switchButtonPressed(_ sender: NSButton) {
-		saveButton.isEnabled = portListView.getEnabledIndices().count <= 15
+		writeButton.isEnabled = userMap.count <= 15
 	}
 	
-	@objc func saveButtonPressed(_ sender: NSButton) {
-		saveButton.isEnabled = false
-		
-		DispatchQueue.main.async {
+	@objc func writeButtonPressed(_ sender: NSButton) {
+		DispatchQueue.work.async {
 			do {
-				let url = try AppDelegate.shared.bundleWriter.writeToDesktop(
-					bundleName: kBundleName,
-					bundleIdentifier: kBundleIdentifier,
-					ioNameMatch: kIONameMatch,
-					ioProviderClass: kIOProviderClass,
-					userMap: self.userMap
-				)
-				
+				let url = try BundleWriter.shared.write(destinationURL: URL.desktop, userMap: self.userMap)
 				print("Wrote bundle to \(url.path)")
 			}
 			
 			catch {
 				FileHandle.standardError.print(error.localizedDescription)
 			}
-			
-			self.saveButton.isEnabled = true
 		}
+	}
+
+	private static func makePortSwitchButton(title: String, initialState state: NSControl.StateValue) -> NSButton {
+		let button = NSButton()
+		button.setButtonType(.switch)
+		button.title = title
+		button.focusRingType = .none
+		button.state = state
+		return button
 	}
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
 	static let shared = AppDelegate()
 	
-	public let bundleWriter = BundleWriter()
-	
 	public lazy var mainWindow: NSWindow = {
-		let minimumWidth: CGFloat = 400.0
 		let window = NSWindow()
 		window.styleMask = [.titled, .closable]
 		window.standardWindowButton(.miniaturizeButton)?.isHidden = true
 		window.standardWindowButton(.zoomButton)?.isHidden = true
-		window.contentView?.widthAnchor.constraint(greaterThanOrEqualToConstant: minimumWidth).isActive = true
+		window.contentView?.widthAnchor.constraint(greaterThanOrEqualToConstant: kWindowWidth).isActive = true
 		return window
 	}()
 	
@@ -469,7 +413,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		NSApp.activate(ignoringOtherApps: true)
 	}
 	
-	public func run() {
+	public func runApp() {
 		NSApp = NSApplication.shared
 		NSApp.delegate = AppDelegate.shared
 		NSApp.mainMenu = mainMenu
@@ -481,4 +425,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 }
 
-AppDelegate.shared.run()
+AppDelegate.shared.runApp()
