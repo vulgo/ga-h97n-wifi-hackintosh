@@ -1,48 +1,12 @@
 # Ethernet
 
-There are 2 versions of H97N-WIFI with different hardware.
+There are 2 versions of H97N-WIFI with different ethernet hardware.
 
-## GA-H97N-WIFI (rev. 1.0)
-
-Rev. 1.0 has
-
-- Intel GbE Ethernet
-- Atheros GbE Ethernet
-
-### Using Intel
-
-Optionally remove from `/EFI/OC/Kexts`:
-
-- `RealtekRTL8111.kext`
-- `AtherosE2200Ethernet.kext`
-
-### Using Atheros
-
-Optionally remove from `/EFI/OC/Kexts`:
-
-- `RealtekRTL8111.kext`
-- `IntelMausiEthernet.kext`
-
-## GA-H97N-WIFI (rev. 1.1)
-
-Rev. 1.1 has
-
-- Intel GbE Ethernet
-- Realtek GbE Ethernet
-
-### Using Intel
-
-Optionally remove from `/EFI/OC/Kexts`:
-
-- `AtherosE2200Ethernet.kext`
-- `RealtekRTL8111.kext`
-
-### Using Realtek
-
-Optionally remove from `/EFI/OC/Kexts`:
-
-- `AtherosE2200Ethernet.kext`
-- `IntelMausiEthernet.kext`
+| GA-H97N-WIFI   | Using     | Optionally remove from `/EFI/OC/Kexts`                |
+|:---------------|:----------|:------------------------------------------------------|
+| Any version    | Intel     | `RealtekRTL8111.kext` `AtherosE2200Ethernet.kext`     |
+| Rev 1.0        | Atheros   | `RealtekRTL8111.kext` `IntelMausiEthernet.kext`       |
+| Rev 1.1        | Realtek   | `AtherosE2200Ethernet.kext` `IntelMausiEthernet.kext` |
 
 ## Updating config.plist
 
