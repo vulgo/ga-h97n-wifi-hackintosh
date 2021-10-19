@@ -103,7 +103,7 @@ GenSMBIOS: [github.com/corpnewt/GenSMBIOS](https://github.com/corpnewt/GenSMBIOS
 
 ## USB
 
-Generate a valid ```USBTool.kext```. See [README-USB-Tool.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-USB-Tool.md)
+Generate a valid ```USBTool.kext```. See [README-usbtool.command.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-usbtool.command.md)
 
 ## First boot
 
