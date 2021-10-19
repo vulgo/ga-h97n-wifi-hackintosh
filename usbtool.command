@@ -4,7 +4,7 @@ import Cocoa
 
 let kAppTitle = "USB Tool"
 let kTargetBoard = "GA-H97N-WIFI"
-let kBundleName = "USBTool"
+let kBundleName = "USBPorts"
 let kBundleIdentifier = "org.usbtool.kext"
 let kIONameMatch = "XHC"
 let kIOProviderClass = "AppleUSBXHCILPTHB"
@@ -298,7 +298,7 @@ class ViewController: NSViewController {
 		
 		for port in PortMap.shared.data {
 			let button = Self.makePortSwitchButton(title: "\(port.name) (\(port.info))", initialState: port.isEnabled ? .on : .off)
-			button.bind(NSBindingName.value, to: port, withKeyPath: #keyPath(USBPort.isEnabled), options: nil)
+			button.bind(NSBindingName.value, to: port, withKeyPath: #keyPath(USBPort.isEnabled), options: [NSBindingOption.validatesImmediately: true])
 			button.target = self
 			button.action = #selector(ViewController.switchButtonPressed(_:))
 			view.addArrangedSubview(button)
