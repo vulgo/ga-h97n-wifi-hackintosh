@@ -30,7 +30,7 @@ Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#int
 
 ## Graphics
 
-Edit the ```DeviceProperties``` section of your config.plist so that the value for ```AAPL,ig-platform-id``` matches your configuration.
+Edit the ```DeviceProperties``` section of your ```config.plist``` so that the value for ```AAPL,ig-platform-id``` matches your configuration.
 
 ```xml
 ...
@@ -60,9 +60,35 @@ See also [README-Intel-Graphics.md](https://github.com/vulgo/ga-h97n-wifi-hackin
 
 Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#deviceproperties](https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#deviceproperties)
 
+## Model Identifier
+
+Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```SystemProductName``` matches your graphics configuration.
+
+```xml
+...
+<key>PlatformInfo</key>
+<dict>
+    ...
+    <key>Generic</key>
+    <dict>
+        ...
+        <key>SystemProductName</key>
+        <string>iMac18,2</string>
+        ...
+    </dict>
+    ...
+</dict>
+...
+````
+
+| SystemProductName | Graphics Configuration |
+|:------------------|:-----------------------|
+| iMac18,1          | Intel Graphics         |
+| iMac18,2          | PCI Express Graphics   |
+
 ## SMBIOS
 
-Edit the ```PlatformInfo``` section of your config.plist so that the ```MLB```, ```ROM```, ```SystemSerialNumber``` and ```SystemUUID``` values are unique to your machine.
+Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```MLB```, ```ROM```, ```SystemSerialNumber``` and ```SystemUUID``` values are unique to your machine.
 
 ```xml
 ...
@@ -95,7 +121,7 @@ Edit the ```PlatformInfo``` section of your config.plist so that the ```MLB```, 
 | SystemSerialNumber           | \**Serial*                |
 | SystemUUID                   | \**SmUUID*                |
 
-\* *GenSMBIOS output, iMac18,2*
+\* *GenSMBIOS output, iMac18,1 or iMac18,2*
 
 Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo](https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo)
 
@@ -105,9 +131,11 @@ GenSMBIOS: [github.com/corpnewt/GenSMBIOS](https://github.com/corpnewt/GenSMBIOS
 
 Generate a valid ```USBPorts.kext```. See [README-usbtool.command.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-usbtool.command.md)
 
-## First boot
+## Reset NVRAM
 
-At the picker, **press space**, choose **Reset NVRAM**.
+At the picker, **press space**, choose ```Reset NVRAM```.
+
+Reset NVRAM at first boot and **whenever the bootloader files have changed**.
 
 ## Post-Install
 
