@@ -2,9 +2,13 @@
 
 ### Device Properties
 
+H97N-WIFI + iGPU
+
 #### Haswell
 
-```AAPL,ig-platform-id``` for Haswell systems not using a discrete PCIe graphics card
+```AAPL,ig-platform-id``` for
+
+- Haswell systems not using a discrete PCIe graphics card
 
 ```xml
 ...
@@ -28,7 +32,9 @@
 
 #### Broadwell
 
-```AAPL,ig-platform-id``` for Broadwell Iris Pro graphics
+```AAPL,ig-platform-id``` for
+
+- desktop Broadwell Iris Pro graphics
 
 ```xml
 ...
@@ -52,7 +58,10 @@
 
 #### Common
 
-Connector patches for H97N-WIFI Haswell or Broadwell systems not using a discrete PCIe graphics card
+```WhateverGreen.kext``` connector patches for H97N-WIFI
+
+- Haswell systems not using a discrete PCIe graphics card
+- desktop Broadwell Iris Pro graphics
 
 ```xml
 ...
