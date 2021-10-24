@@ -2,8 +2,6 @@
 
 OpenCore configuration for running macOS on the Gigabyte GA-H97N-WIFI motherboard.
 
-This is for Haswell CPUs. For desktop Broadwell see [github.com/vulgo/h97n-wifi-broadwell-hackintosh](https://github.com/vulgo/h97n-wifi-broadwell-hackintosh)
-
 ## Firmware Settings
 
 #### BIOS Features
@@ -32,36 +30,13 @@ Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#int
 
 ## Graphics
 
-Edit the ```DeviceProperties``` section of your config.plist so that the value for ```AAPL,ig-platform-id``` matches your configuration.
+The default configuration targets discrete AMD graphics with the iGPU using a connectorless framebuffer. If your system is AMD + connectorless then graphics-related changes to the default ```config.plist``` are probably not required.
 
-```xml
-...
-<key>DeviceProperties</key>
-<dict>
-    <key>Add</key>
-    <dict>
-        ...
-        <key>PciRoot(0x0)/Pci(0x2,0x0)</key>
-        <dict>
-            <key>AAPL,ig-platform-id</key>
-            <data>BAASBA==</data>
-        </dict>
-        ...
-    </dict>
-</dict>
-...
-```
-
-| AAPL,ig-platform-id | Base64   | IGPU Configuration                    |
-|:--------------------|:---------|--------------------------------------:|
-| 0300220D            | AwAiDQ== | Attached display                      |
-| 04001204            | BAASBA== | Connectorless (using PCIe AMD GPU)    |
-
-Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#deviceproperties](https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#deviceproperties)
+In all other cases, refer to [README-Intel-Graphics.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-Intel-Graphics.md)
 
 ## SMBIOS
 
-Edit the ```PlatformInfo``` section of your config.plist so that the ```MLB```, ```ROM```, ```SystemSerialNumber``` and ```SystemUUID``` values are unique to your machine.
+Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```MLB```, ```ROM```, ```SystemSerialNumber``` and ```SystemUUID``` values are unique to your machine.
 
 ```xml
 ...
@@ -94,19 +69,21 @@ Edit the ```PlatformInfo``` section of your config.plist so that the ```MLB```, 
 | SystemSerialNumber           | \**Serial*                |
 | SystemUUID                   | \**SmUUID*                |
 
-\* *GenSMBIOS output, iMac15,1*
+\* *GenSMBIOS output, iMac18,2 (or iMac18,1 using iGPU)*
 
 Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo](https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo)
 
 GenSMBIOS: [github.com/corpnewt/GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
 
+## Reset NVRAM
+
+At the picker, **press space**, choose ```Reset NVRAM```.
+
+Reset NVRAM at first boot and **whenever the bootloader files have changed**.
+
 ## USB
 
-Edit the USBPortInjector.kext ```Info.plist```. See [README-USBPortInjector.kext.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-USBPortInjector.kext.md)
-
-## First boot
-
-At the picker, **press space**, choose **Reset NVRAM**.
+Generate a valid ```USBPorts.kext```. See [README-usbtool.command.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-usbtool.command.md)
 
 ## Post-Install
 
