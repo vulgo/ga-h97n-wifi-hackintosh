@@ -456,8 +456,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 			NSMenuItem(title: "Quit \(processName)",
 				   action: #selector(NSApplication.terminate(_:)),
 				   keyEquivalent: "q")
-		])
-		
+		])		
 		return menu
 	}()
 	

@@ -1,6 +1,6 @@
 # usbtool.command
 
-After completing the OpenCore `config.plist` according to `README-*.md` proceed as follows to generate a valid `USBPorts.kext`
+After completing the OpenCore `config.plist` according to [README.md](/README.md) and [README-Intel-Graphics.md](/README-Intel-Graphics.md) the following procedure will generate a valid `USBPorts.kext`
 
 #### Run usbtool.command
 
@@ -9,7 +9,7 @@ After completing the OpenCore `config.plist` according to `README-*.md` proceed 
 - keep within the 15 port limit by switching off the ports that aren't being used
 - press the button to generate `USBPorts.kext` on the desktop
 
-#### Install USBPorts.kext for bootloader injection
+#### Install USBPorts.kext to the Bootloader Kexts Directory
 
 - mount the EFI system partition
 - copy `USBPorts.kext` from the desktop to `/Volumes/EFI/OC/Kexts`

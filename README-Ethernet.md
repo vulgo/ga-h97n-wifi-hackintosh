@@ -1,6 +1,6 @@
 # Ethernet
 
-- There are 2 versions of H97N-WIFI with different ethernet hardware
+There are 2 versions of H97N-WIFI with different ethernet hardware
 
 | GA-H97N-WIFI   | Using     | Optionally remove from `/EFI/OC/Kexts`                |
 |:---------------|:----------|:------------------------------------------------------|

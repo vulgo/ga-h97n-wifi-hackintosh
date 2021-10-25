@@ -30,9 +30,11 @@ Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#int
 
 ## Graphics
 
-The default configuration targets discrete AMD graphics with the iGPU using a connectorless framebuffer. If your system is AMD + connectorless then graphics-related changes to the default ```config.plist``` are probably not required.
+The default configuration targets discrete AMD graphics + Haswell iGPU using a connectorless framebuffer.
 
-In all other cases, refer to [README-Intel-Graphics.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-Intel-Graphics.md)
+> If your system is AMD + Haswell connectorless then graphics-related changes to the default ```config.plist``` may not be required
+
+In all other cases, refer to [README-Intel-Graphics.md](/README-Intel-Graphics.md)
 
 ## SMBIOS
 
@@ -83,7 +85,7 @@ Reset NVRAM at first boot and **whenever the bootloader files have changed**.
 
 ## USB
 
-Generate a valid ```USBPorts.kext```. See [README-usbtool.command.md](https://github.com/vulgo/ga-h97n-wifi-hackintosh/blob/main/README-usbtool.command.md)
+Generate a valid ```USBPorts.kext```. See [README-usbtool.command.md](/README-usbtool.command.md)
 
 ## Post-Install
 
