@@ -350,8 +350,10 @@ final class ViewController: NSViewController {
 			view.addRow(with: [button, makeLabel(port.info)])
 		}
 		
+		view.rowAlignment = .firstBaseline
 		view.columnSpacing = kPortListColumnSpacing
 		view.rowSpacing = kPortListRowSpacing
+		view.column(at: 1).xPlacement = .leading
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view
 	}()
@@ -414,6 +416,7 @@ final class ViewController: NSViewController {
 		button.title = title
 		button.setButtonType(.switch)
 		button.state = enabled ? .on : .off
+		button.setContentHuggingPriority(.defaultLow, for: .horizontal)
 		return button
 	}
 	
@@ -424,6 +427,7 @@ final class ViewController: NSViewController {
 		textField.isEditable = false
 		textField.textColor = NSColor.secondaryLabelColor
 		textField.stringValue = stringValue
+		textField.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 		return textField
 	}
 }
@@ -456,7 +460,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 			NSMenuItem(title: "Quit \(processName)",
 				   action: #selector(NSApplication.terminate(_:)),
 				   keyEquivalent: "q")
-		])		
+		])
 		return menu
 	}()
 	
