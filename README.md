@@ -64,6 +64,10 @@ Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```ML
 ...
 ````
 
+#### GenSMBIOS
+
+> Python script that uses acidanthera's `macserial` to generate SMBIOS and optionally saves them to a plist
+
 | PlatformInfo &#8594; Generic | Source                    |
 |:-----------------------------|--------------------------:|
 | MLB                          | \**Board Serial*          |
