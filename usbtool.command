@@ -217,6 +217,34 @@ final class PortMap {
 	}
 }
 
+struct Bundle {
+	init(destination url: URL) throws {
+		guard FileManager.default.directoryExists(atPath: url.path) else {
+			throw RuntimeError("directory not found at destination path \(url.path)")
+		}
+		
+		kextURL = url.appendingPathComponent("\(kBundleName).kext")
+		contentsURL = kextURL.appendingPathComponent("Contents")
+		plistURL = contentsURL.appendingPathComponent("Info.plist")
+	}
+	
+	let kextURL: URL
+	let contentsURL: URL
+	let plistURL: URL
+	
+	func createDirectories() throws {
+		try FileManager.default.createDirectory(atPath: contentsURL.path, withIntermediateDirectories: true, attributes: nil)
+	}
+	
+	func updateModificationDate() throws {
+		try FileManager.default.setAttributes([.modificationDate: NSDate()], ofItemAtPath: kextURL.path)
+	}
+	
+	func writePropertyList(data: Data) throws {
+		try data.write(to: plistURL, options: .atomic)
+	}
+}
+
 final class BundleWriter {
 	static let shared = BundleWriter()
 	private let propertyList: [String: Any]
@@ -279,14 +307,11 @@ final class BundleWriter {
 		let portAddressKey = "port"
 		let portConnectorKey = "UsbConnector"
 		
-		guard FileManager.default.directoryExists(atPath: url.path) else {
-			throw RuntimeError("directory not found at destination path \(url.path)")
-		}
-		
 		guard let portCount = userMap.lastAddress else {
 			throw RuntimeError("userMap is empty")
 		}
 		
+		let bundle = try Bundle(destination: url)
 		var propertyList = propertyList
 		var ports = [String: Any]()
 		
@@ -312,15 +337,12 @@ final class BundleWriter {
 				]
 			]
 		]
-		
+
 		let data = try PropertyListSerialization.data(fromPropertyList: propertyList, format: .xml, options: 0)
-		let bundleURL = url.appendingPathComponent("\(kBundleName).kext")
-		let contentsURL = bundleURL.appendingPathComponent("Contents")
-		let infoPlistURL = contentsURL.appendingPathComponent("Info.plist")
-		try FileManager.default.createDirectory(atPath: contentsURL.path, withIntermediateDirectories: true, attributes: nil)
-		try data.write(to: infoPlistURL, options: .atomic)
-		try? FileManager.default.setAttributes([.modificationDate: NSDate()], ofItemAtPath: bundleURL.path)
-		return bundleURL
+		try bundle.createDirectories()
+		try bundle.writePropertyList(data: data)
+		try? bundle.updateModificationDate()
+		return bundle.kextURL
 	}
 }
 
