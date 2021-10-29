@@ -73,8 +73,6 @@ Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```ML
 
 \* *GenSMBIOS output, iMac18,2 (or iMac18,1 using iGPU)*
 
-Source: [dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo](https://dortania.github.io/OpenCore-Install-Guide/config.plist/haswell.html#platforminfo)
-
 GenSMBIOS: [github.com/corpnewt/GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
 
 ## Reset NVRAM
