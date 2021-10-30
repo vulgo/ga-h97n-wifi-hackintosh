@@ -47,10 +47,8 @@ Edit the `DeviceProperties` section of your `config.plist` according to your con
         <dict>
             <key>AAPL,ig-platform-id</key>
             <data>AwAiDQ==</data>
-            <key>framebuffer-con0-enable</key>
+            <key>framebuffer-patch-enable</key>
             <data>AQAAAA==</data>
-            <key>framebuffer-con0-type</key>
-            <data>AAgAAA==</data>
             <key>framebuffer-con1-enable</key>
             <data>AQAAAA==</data>
             <key>framebuffer-con1-type</key>
@@ -59,6 +57,8 @@ Edit the `DeviceProperties` section of your `config.plist` according to your con
             <data>AQAAAA==</data>
             <key>framebuffer-con2-type</key>
             <data>AAgAAA==</data>
+            <key>framebuffer-con2-flags</key>
+            <data>hwAAAA==</data>
         </dict>
         ...
     </dict>
@@ -107,10 +107,8 @@ Edit the `DeviceProperties` section of your `config.plist`.
         <dict>
             <key>AAPL,ig-platform-id</key>
             <data>BwAiFg==</data>
-            <key>framebuffer-con0-enable</key>
+            <key>framebuffer-patch-enable</key>
             <data>AQAAAA==</data>
-            <key>framebuffer-con0-type</key>
-            <data>AAgAAA==</data>
             <key>framebuffer-con1-enable</key>
             <data>AQAAAA==</data>
             <key>framebuffer-con1-type</key>
@@ -119,6 +117,8 @@ Edit the `DeviceProperties` section of your `config.plist`.
             <data>AQAAAA==</data>
             <key>framebuffer-con2-type</key>
             <data>AAgAAA==</data>
+            <key>framebuffer-con2-flags</key>
+            <data>BwUAAA==</data>
         </dict>
         ...
     </dict>
