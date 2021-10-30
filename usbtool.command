@@ -67,32 +67,32 @@ let kDefaultPortMapData: [USBPort] = [
 		connector: .proprietary,
 		info: "Mini PCI express"
 	), .init(
-		name: "SS01",
+		name: "SSP1",
 		address: 0x10,
 		connector: .a3,
 		info: "USB 3 header"
 	), .init(
-		name: "SS02",
+		name: "SSP2",
 		address: 0x11,
 		connector: .a3,
 		info: "USB 3 header"
 	), .init(
-		name: "SS03",
+		name: "SSP3",
 		address: 0x12,
 		connector: .a3,
 		info: "Rear panel USB 3 connector"
 	), .init(
-		name: "SS04",
+		name: "SSP4",
 		address: 0x13,
 		connector: .a3,
 		info: "Rear panel USB 3 connector"
 	), .init(
-		name: "SS05",
+		name: "SSP5",
 		address: 0x14,
 		connector: .a3,
 		info: "Rear panel USB 3 connector"
 	), .init(
-		name: "SS06",
+		name: "SSP6",
 		address: 0x15,
 		connector: .a3,
 		info: "Rear panel USB 3 connector"
