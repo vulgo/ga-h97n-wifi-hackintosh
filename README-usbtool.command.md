@@ -12,7 +12,7 @@ After completing the OpenCore `config.plist` according to [README.md](/README.md
 #### Install USBPorts.kext to the Bootloader Kexts Directory
 
 - mount the EFI system partition
-- copy `USBPorts.kext` from the desktop to `/Volumes/EFI/OC/Kexts`
+- copy `USBPorts.kext` from the desktop to `/Volumes/EFI/EFI/OC/Kexts`
 
 ### USB 2 Port Locations
 
@@ -34,12 +34,12 @@ After completing the OpenCore `config.plist` according to [README.md](/README.md
 
 | Port | Location                   |
 |:-----|:---------------------------|
-| SS01 | USB 3 header               |
-| SS02 | USB 3 header               |
-| SS03 | Rear panel USB 3 connector |
-| SS04 | Rear panel USB 3 connector |
-| SS05 | Rear panel USB 3 connector |
-| SS06 | Rear panel USB 3 connector |
+| SSP1 | USB 3 header               |
+| SSP2 | USB 3 header               |
+| SSP3 | Rear panel USB 3 connector |
+| SSP4 | Rear panel USB 3 connector |
+| SSP5 | Rear panel USB 3 connector |
+| SSP6 | Rear panel USB 3 connector |
 
 ### Rear Panel Layout
 
