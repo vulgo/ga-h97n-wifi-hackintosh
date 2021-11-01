@@ -20,7 +20,7 @@ OpenCore configuration for running macOS on the Gigabyte GA-H97N-WIFI motherboar
 |:---------------------------------------------|---------:|
 | XHCI Mode                                    | Enabled  |
 | Intel Processor Graphics                     | Enabled  |
-| Intel Processor Graphics Memory Allocation   | 64M      |
+| Intel Processor Graphics Memory Allocation   | 96M      |
 | DVMT Total Memory Size                       | MAX      |
 | Legacy USB Support                           | Disabled |
 | XHCI Handoff                                 | Enabled  |
