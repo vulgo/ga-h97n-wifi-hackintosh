@@ -34,13 +34,13 @@ The default configuration targets discrete AMD graphics + Haswell iGPU using a c
 
 > If your system is AMD + Haswell connectorless then graphics-related changes to the default ```config.plist``` may not be required
 
-In all other cases, refer to [README-Intel-Graphics.md](/README-Intel-Graphics.md)
+In all other cases, refer to [README-Intel-Graphics.md](/README/README-Intel-Graphics.md)
 
 ## SMBIOS
 
 Before installing macOS it is useful to generate certain serial numbers and identifiers.
 
-Refer to [README-SMBIOS.md](/README-SMBIOS.md)
+Refer to [README-SMBIOS.md](/README/README-SMBIOS.md)
 
 ## Reset NVRAM
 
@@ -50,7 +50,7 @@ Reset NVRAM at first boot and **whenever the bootloader files have changed**.
 
 ## USB
 
-Generate a valid ```USBPorts.kext```. See [README-usbtool.command.md](/README-usbtool.command.md)
+Generate a valid ```USBPorts.kext```. See [README-usbtool.command.md](/README/README-usbtool.command.md)
 
 ## Post-Install
 
