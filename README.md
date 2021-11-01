@@ -38,48 +38,9 @@ In all other cases, refer to [README-Intel-Graphics.md](/README-Intel-Graphics.m
 
 ## SMBIOS
 
-Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```MLB```, ```ROM```, ```SystemSerialNumber``` and ```SystemUUID``` values are unique to your machine.
+Before installing macOS it is useful to generate certain serial numbers and identifiers.
 
-```xml
-...
-<key>PlatformInfo</key>
-<dict>
-    ...
-    <key>Generic</key>
-    <dict>
-        ...
-        <key>MLB</key>
-        <string>M0000000000000001</string>
-        ...
-        <key>ROM</key>
-        <data>ESIzRFVm</data>
-        ...
-        <key>SystemSerialNumber</key>
-        <string>W00000000001</string>
-        <key>SystemUUID</key>
-        <string>00000000-0000-0000-0000-000000000000</string>
-    </dict>
-    ...
-</dict>
-...
-````
-
-### GenSMBIOS
-
-> GenSMBIOS is a python script that uses acidanthera's `macserial` to generate SMBIOS and optionally saves them to a plist
-
-The `GenSMBIOS` model identifier should match `SystemProductName` in `config.plist` where the default is `iMac18,2`. See also [README-Intel-Graphics.md](/README-Intel-Graphics.md).
-
-| PlatformInfo &#8594; Generic | Source                    |
-|:-----------------------------|--------------------------:|
-| MLB                          | \**Board Serial*          |
-| ROM                          | \**Apple ROM*             |
-| SystemSerialNumber           | \**Serial*                |
-| SystemUUID                   | \**SmUUID*                |
-
-\* *GenSMBIOS output*
-
-GenSMBIOS: [github.com/corpnewt/GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
+Refer to [README-SMBIOS.md](/README-SMBIOS.md)
 
 ## Reset NVRAM
 
