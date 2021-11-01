@@ -64,9 +64,11 @@ Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```ML
 ...
 ````
 
-#### GenSMBIOS
+### GenSMBIOS
 
-> Python script that uses acidanthera's `macserial` to generate SMBIOS and optionally saves them to a plist
+> GenSMBIOS is a python script that uses acidanthera's `macserial` to generate SMBIOS and optionally saves them to a plist
+
+The `GenSMBIOS` model identifier should match `SystemProductName` in `config.plist` where the default is `iMac18,2`. See also [README-Intel-Graphics.md](/README-Intel-Graphics.md).
 
 | PlatformInfo &#8594; Generic | Source                    |
 |:-----------------------------|--------------------------:|
@@ -75,7 +77,7 @@ Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```ML
 | SystemSerialNumber           | \**Serial*                |
 | SystemUUID                   | \**SmUUID*                |
 
-\* *GenSMBIOS output, iMac18,2 (or iMac18,1 using iGPU)*
+\* *GenSMBIOS output*
 
 GenSMBIOS: [github.com/corpnewt/GenSMBIOS](https://github.com/corpnewt/GenSMBIOS)
 

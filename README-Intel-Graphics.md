@@ -25,7 +25,8 @@ Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```Sy
 
 | SystemProductName | Graphics Configuration | Intel Framebuffer |
 |:------------------|:-----------------------|:------------------|
-| iMac18,1          | Intel graphics         | Attached display  |
+| iMac18,1          | Haswell HD Graphics    | Attached display  |
+| iMac16,2          | Broadwell Iris Pro     | Attached display  |
 | iMac18,2          | PCIe graphics card     | Connectorless     |
 
 ## Haswell HD Graphics Device Properties
@@ -94,7 +95,7 @@ Edit the `DeviceProperties` section of your `config.plist` according to your con
 
 Edit the `DeviceProperties` section of your `config.plist`.
 
-> Broadwell configurations use the `iMac18,1` model identifier.
+> Broadwell configurations use the `iMac16,2` model identifier.
 
 ```xml
 ...
