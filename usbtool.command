@@ -165,6 +165,12 @@ extension NSWindow {
 	var zoomButton: NSButton? { standardWindowButton(.zoomButton) }
 }
 
+extension PropertyListSerialization {
+        class func xml(from dictionary: [String: Any]) throws -> Data {
+                return try PropertyListSerialization.data(fromPropertyList: dictionary, format: .xml, options: 0)
+        }
+}
+
 struct RuntimeError: LocalizedError {
 	let description: String
 	let location: String
@@ -333,9 +339,7 @@ final class BundleWriter {
 			]
 		}
 		
-		propertyList[bundleNameKey] = kBundleName
-		propertyList[bundleIdentifierKey] = kBundleIdentifier
-		propertyList[personalitiesKey] = [
+		let driverPersonality: [String: Any] = [
 			kDriverPersonalityKey: [
 				bundleIdentifierKey: driverBundleIdentifier,
 				kIOClassKey: driverClass,
@@ -348,8 +352,12 @@ final class BundleWriter {
 				]
 			]
 		]
+		
+		propertyList[bundleNameKey] = kBundleName
+		propertyList[bundleIdentifierKey] = kBundleIdentifier
+		propertyList[personalitiesKey] = driverPersonality
 
-		let data = try PropertyListSerialization.data(fromPropertyList: propertyList, format: .xml, options: 0)
+		let data = try PropertyListSerialization.xml(from: propertyList)
 		try bundle.createDirectories()
 		try bundle.writePropertyList(data: data)
 		try? bundle.updateModificationDate()
@@ -371,21 +379,22 @@ final class ViewController: NSViewController {
 	}
 	
 	private lazy var portListView: NSGridView = {
-		let view = NSGridView(numberOfColumns: 3, rows: 0)
+		let view = NSGridView(numberOfColumns: 2, rows: 0)
 		
 		for port in PortMap.default.data {
 			let button = makePortSwitchButton(title: port.name, enabled: port.isEnabled)
 			button.target = self
-			button.action = #selector(ViewController.switchButtonPressed(_:))
-			button.bind(NSBindingName.value, to: port,
+			button.action = #selector(Self.switchButtonPressed(_:))
+			button.bind(.value, to: port,
 				    withKeyPath: #keyPath(USBPort.isEnabled),
-				    options: [NSBindingOption.validatesImmediately: true])
+				    options: [.validatesImmediately: true])
 			view.addRow(with: [button, makeLabel(port.info)])
 		}
 		
 		view.rowAlignment = .firstBaseline
 		view.columnSpacing = kPortListColumnSpacing
 		view.rowSpacing = kPortListRowSpacing
+		view.column(at: 0).xPlacement = .fill
 		view.column(at: 1).xPlacement = .leading
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view
@@ -448,7 +457,7 @@ final class ViewController: NSViewController {
 		button.title = title
 		button.setButtonType(.switch)
 		button.state = enabled ? .on : .off
-		button.setContentHuggingPriority(.defaultLow, for: .horizontal)
+		button.invalidateIntrinsicContentSize()
 		return button
 	}
 	
@@ -459,7 +468,7 @@ final class ViewController: NSViewController {
 		textField.isEditable = false
 		textField.textColor = NSColor.secondaryLabelColor
 		textField.stringValue = stringValue
-		textField.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+		textField.invalidateIntrinsicContentSize()
 		return textField
 	}
 }
@@ -507,7 +516,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 	
 	public func runApp() {
 		NSApp = NSApplication.shared
-		NSApp.delegate = AppDelegate.shared
+		NSApp.delegate = Self.shared
 		NSApp.mainMenu = mainMenu
 		NSApp.setActivationPolicy(.regular)
 		mainWindow.contentViewController = ViewController.shared
