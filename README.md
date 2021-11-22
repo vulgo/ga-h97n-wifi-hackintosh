@@ -1,6 +1,6 @@
 # H97N-WIFI Hackintosh
 
-OpenCore configuration for running macOS on the Gigabyte GA-H97N-WIFI motherboard.
+OpenCore configuration for running macOS 12 on the Gigabyte GA-H97N-WIFI motherboard.
 
 ## Firmware Settings
 
