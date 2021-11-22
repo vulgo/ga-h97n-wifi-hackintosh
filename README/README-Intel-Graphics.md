@@ -1,6 +1,12 @@
 # Intel Graphics
 
-Source: [github.com/acidanthera/WhateverGreen](https://github.com/acidanthera/WhateverGreen)
+Up to 2 monitors should work. Please use the HDMI ports and report any issues or preferably solutions to problems encountered.
+
+#### Sources
+
+- [acidanthera/WhateverGreen/README](https://github.com/acidanthera/WhateverGreen/blob/master/README.md)
+- [acidanthera/WhateverGreen/FAQ/IntelHD](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.en.md)
+- [acidanthera/WhateverGreen/FAQ/Shiki](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.Shiki.en.md)
 
 ## Model Identifier
 
@@ -33,7 +39,7 @@ Edit the ```PlatformInfo``` section of your ```config.plist``` so that the ```Sy
 
 Edit the `DeviceProperties` section of your `config.plist` according to your configuration.
 
-### Attached Display
+### Haswell Attached Display
 
 > Haswell attached display configurations use the `iMac18,1` model identifier.
 
@@ -67,7 +73,7 @@ Edit the `DeviceProperties` section of your `config.plist` according to your con
 ...
 ```
 
-### Connectorless
+### Haswell Connectorless
 
 > When a supported PCIe graphics card is installed it is recommended to configure the Haswell iGPU with the connectorless framebuffer.
 
@@ -95,7 +101,7 @@ Edit the `DeviceProperties` section of your `config.plist` according to your con
 
 Edit the `DeviceProperties` section of your `config.plist`.
 
-> Broadwell configurations use the `iMac16,2` model identifier.
+> Broadwell configurations use the `iMac16,2` model identifier. Discrete graphics cards should also be working with these properties.
 
 ```xml
 ...
